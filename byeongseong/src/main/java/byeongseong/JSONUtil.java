@@ -87,6 +87,34 @@ public class JSONUtil {
 		close();
 		return res;
 	}
+	public JSONObject searchShopListbyKey(String key) throws NamingException, SQLException {
+		con = DBManager.getConnection();
+		String sql = "SELECT number,name,score,menutable,info,category FROM shoplist WHERE name LIKE '%"+key+"%'";
+		pstmt = con.prepareStatement(sql);
+		//pstmt.setString(1, key);
+		rs = pstmt.executeQuery();
+		JSONObject res = new JSONObject();
+		JSONArray arr = new JSONArray();
+		while(rs.next()) {
+			int number = rs.getInt("number");
+			String name = rs.getString("name");
+			float score = rs.getFloat("score");
+			String menutable = rs.getString("menutable");
+			String info = rs.getString("info");
+			Integer category = rs.getInt("category");
+			JSONObject obj = new JSONObject();
+			obj.put("number", number);
+			obj.put("name", name);
+			obj.put("score", score);
+			obj.put("menutable", menutable);
+			obj.put("info", info);
+			obj.put("category", category);
+			arr.put(obj);
+		}
+		res.put("list", arr);
+		close();
+		return res;
+	}
 	public JSONObject searchMenuList(String key) throws NamingException, SQLException{
 		con = DBManager.getConnection();
 		String sql = "SELECT idx,name,price,img FROM "+key;

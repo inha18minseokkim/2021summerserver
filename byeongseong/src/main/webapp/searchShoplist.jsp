@@ -5,6 +5,7 @@
 <%@ page import="byeongseong.JSONUtil" %>
 
 <%
+//카테고리 버튼에서 쓰는거
 request.setCharacterEncoding("utf8");
 int key = Integer.parseInt(request.getParameter("key"));
 JSONUtil byeongseong = new JSONUtil();
