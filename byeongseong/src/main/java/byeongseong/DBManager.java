@@ -41,5 +41,26 @@ public class DBManager {
 		pstmt.execute();
 		pstmt.close();
 	}
+	public static void createAccount(String name, String deliveryspot) throws SQLException, NamingException {
+		if(con == null) getConnection();
+		String sql = "INSERT INTO account(accountID,deliveryspot) VALUES(?,?)";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, name);
+		pstmt.setString(2, deliveryspot);
+		pstmt.execute();
+		pstmt.close();
+	}
+	public static boolean findAccount(String name) throws SQLException, NamingException {
+		if(con == null) getConnection();
+		String sql = "SELECT count(*) FROM account WHERE accountID=?";
+		pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, name);
+		rs = pstmt.executeQuery();
+		rs.next();
+		int res = rs.getInt(1);
+		System.out.println(res +"있음 ㅇㅇ");
+		if(res == 1) return true;
+		else return false;
+	}
 	
 }
